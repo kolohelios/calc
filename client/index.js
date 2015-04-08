@@ -166,6 +166,7 @@ function performOperation() {
       else {
         result = 'Divide by 0';
         clearDisplay();
+        result = 0;
       }
   }
   $('#displaytext').text(result);
