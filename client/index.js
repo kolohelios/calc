@@ -5,6 +5,7 @@ var operator = '';
 var firstNumber = 0, secondNumber = 0;
 var subsequentOperation = false;
 var maxDisplayChars = 10;
+var performOperationStaged = false;
 
 $(document).ready(function() {
 
@@ -41,9 +42,6 @@ function buttonHit(button) {
 }
 
 function inputHandler(char) {
-  if(char.match(/\d/) !== null || char === '.') {
-    putNumberInBufferAndDisplay(char);
-  }
   switch (char) {
     case 'C':
       clearDisplay();
@@ -68,6 +66,11 @@ function inputHandler(char) {
       break;
     case '%':
       percentage();
+      break;
+    default:
+      if(char.match(/\d/) !== null || char.match(/[.]/)) {
+        putNumberInBufferAndDisplay(char);
+    }
   }
 }
 
@@ -96,16 +99,19 @@ function clearDisplay() {
 }
 
 function setOperation(oper) {
-  if(displayBuffer.length > 0) {
-    if(subsequentOperation) {
-      secondNumber = parseFloat(displayBuffer);
+  if(performOperationStaged === false) {
+    if(displayBuffer.length > 0) {
+      if(subsequentOperation) {
+        secondNumber = parseFloat(displayBuffer);
+      }
+      else {
+        firstNumber = parseFloat(displayBuffer);
+      }
+      clearDisplay();
     }
-    else {
-      firstNumber = parseFloat(displayBuffer);
-    }
-    operator = oper;
-    clearDisplay();
   }
+  operator = oper;
+  performOperationStaged = true;
 }
 
 function fixKeyboardMapping(keyCharCode) {
@@ -166,4 +172,5 @@ function performOperation() {
   firstNumber = result;
   displayBuffer = '0';
   subsequentOperation = true;
+  performOperationStaged = false;
 }
