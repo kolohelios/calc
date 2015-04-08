@@ -80,7 +80,7 @@ function putNumberInBufferAndDisplay(number) {
       displayBuffer = displayBuffer.concat(number);
     }
   }
-  else if(displayBuffer.length >= maxDisplayChar) {
+  else if(displayBuffer.length >= maxDisplayChars) {
     // do nothing... the display is full
   }
   else {
