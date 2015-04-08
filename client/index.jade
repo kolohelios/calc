@@ -7,8 +7,55 @@ html
     link(rel='stylesheet', href=isProd ? '/index.min.css' : '/index.css')
     link(rel='shortcut icon', href='/favicon.ico')
   body
-    img#apollo(src='/assets/apollo.jpg')
-    h1#title Apollo
-
-    script(src='/vendor/lodash/lodash.min.js')
+    #calccontainer
+      #display
+        p#displaytext 0
+      #buttons
+        ul.calcrow
+          li.calcbutton
+            p.calctext C
+          li.calcbutton
+            p.calctext
+              span +
+              span /
+              span -
+          li.calcbutton 
+            p.calctext %
+          li.calcbutton.orangebutton 
+            p.calctext &#X00F7;
+        ul.calcrow
+          li.calcbutton
+            p.calctext 7
+          li.calcbutton
+            p.calctext 8
+          li.calcbutton 
+            p.calctext 9
+          li.calcbutton.orangebutton
+            p.calctext X
+        ul.calcrow
+          li.calcbutton
+            p.calctext 4
+          li.calcbutton
+            p.calctext 5
+          li.calcbutton 
+            p.calctext 6
+          li.calcbutton.orangebutton
+            p.calctext –
+        ul.calcrow
+          li.calcbutton
+            p.calctext 1
+          li.calcbutton
+            p.calctext 2
+          li.calcbutton 
+            p.calctext 3
+          li.calcbutton.orangebutton
+            p.calctext +
+        ul.calcrow
+          li.calcbutton#calcbutton0
+            p.calctext#calctext0 0
+          li.calcbutton 
+            p.calctext .
+          li.calcbutton.orangebutton#lastrowbox
+            p.calctext =
+    script(src='/vendor/jquery/dist/jquery.min.js')
     script(src=isProd ? '/index.min.js' : '/index.js')

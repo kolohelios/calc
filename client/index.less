@@ -1,19 +1,63 @@
-body{
-  color: hsla(52, 100%, 20%, 1.0);
-  background-color: #FFDC00;
-}
+body {
+  width: 283px;
+  font-family: helvetica;
+  font-weight: 100;
+  -webkit-font-smoothing: antialiased;
 
-#apollo{
-  border: 5px solid hsla(52, 100%, 20%, 1.0);
-  width: 150px;
-  height: 225px;
 }
+#calccontainer {
+  margin: 0;
+  padding: 0;
+}
+#display {
+  background-color: black;
+  margin-left: -3px;
+  margin-right: 3px;
+}
+#displaytext {
+  text-align: right;
+  color: white;
+  font-size: 45px;
+  padding-top: 20px;
+  padding-right: 10px;
+}
+#buttons {
+  margin: 0;
+}
+.calcrow {
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.calcbutton {
+  background-color: #DDD;
+  text-align: center;
+  width: 70px;
+  min-height: 70px;
+  font-size: 20px;
+  padding: 0;
+  margin: -3px;
+  display: inline-block;
+  border: 1px gray solid;
+}
+#calcbuttonplusminus {
 
-#title{
-  position: relative;
-  top: -170px;
-  left: 200px;
-  font-family: monospace;
-  letter-spacing: 10px;
-  font-size: 40px;
+}
+#calcbutton0 {
+  width: 141px;
+}
+.calctext {
+  margin-top: 26px;
+  vertical-align: middle;
+}
+#calctext0 {
+  text-align: left;
+  margin-left: 30px;
+}
+.orangebutton {
+  background-color: orange;
+  color: white;
+}
+#lastrowbox {
+  margin: -4px;
 }
