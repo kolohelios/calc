@@ -1,9 +1,8 @@
 body {
   width: 283px;
-  font-family: helvetica;
-  font-weight: 100;
+  font-family: 'Helvetica Neue', helvetica;
+  font-weight: 300;
   -webkit-font-smoothing: antialiased;
-
 }
 #calccontainer {
   margin: 0;
@@ -13,16 +12,19 @@ body {
   background-color: black;
   margin-left: -3px;
   margin-right: 3px;
+  min-height: 100px;
 }
 #displaytext {
+  position: relative;
+  top: 25px;
   text-align: right;
   color: white;
   font-size: 45px;
-  padding-top: 20px;
-  padding-right: 10px;
+  padding: 20px 10px 10px 0;
 }
 #buttons {
-  margin: 0;
+  margin-top: -42px;
+  padding: 0;
 }
 .calcrow {
   padding: 0;
@@ -41,13 +43,20 @@ body {
   border: 1px gray solid;
 }
 #calcbuttonplusminus {
-
+  padding: -20px 0;
+}
+#calcplusminusbuttontext {
+  margin-top: 14px;
+  vertical-align: middle;
+}
+#calcbuttonslash {
+  font-size: 26px;
 }
 #calcbutton0 {
   width: 141px;
 }
-.calctext {
-  margin-top: 26px;
+.calcbuttontext {
+  margin-top: 20px;
   vertical-align: middle;
 }
 #calctext0 {

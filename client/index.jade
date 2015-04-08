@@ -13,49 +13,49 @@ html
       #buttons
         ul.calcrow
           li.calcbutton
-            p.calctext C
-          li.calcbutton
-            p.calctext
-              span +
-              span /
-              span -
+            p.calcbuttontext C
+          li.calcbutton#calcbuttonplusminus
+            p#calcplusminusbuttontext
+              span#calcbuttonplus &#X0207A;
+              span#calcbuttonslash &#X02044;
+              span#calcbuttonminus -
           li.calcbutton 
-            p.calctext %
+            p.calcbuttontext %
           li.calcbutton.orangebutton 
-            p.calctext &#X00F7;
+            p.calcbuttontext &#X00F7;
         ul.calcrow
           li.calcbutton
-            p.calctext 7
+            p.calcbuttontext 7
           li.calcbutton
-            p.calctext 8
+            p.calcbuttontext 8
           li.calcbutton 
-            p.calctext 9
+            p.calcbuttontext 9
           li.calcbutton.orangebutton
-            p.calctext X
+            p.calcbuttontext X
         ul.calcrow
           li.calcbutton
-            p.calctext 4
+            p.calcbuttontext 4
           li.calcbutton
-            p.calctext 5
+            p.calcbuttontext 5
           li.calcbutton 
-            p.calctext 6
+            p.calcbuttontext 6
           li.calcbutton.orangebutton
-            p.calctext –
+            p.calcbuttontext –
         ul.calcrow
           li.calcbutton
-            p.calctext 1
+            p.calcbuttontext 1
           li.calcbutton
-            p.calctext 2
+            p.calcbuttontext 2
           li.calcbutton 
-            p.calctext 3
+            p.calcbuttontext 3
           li.calcbutton.orangebutton
-            p.calctext +
+            p.calcbuttontext +
         ul.calcrow
           li.calcbutton#calcbutton0
-            p.calctext#calctext0 0
+            p.calcbuttontext#calctext0 0
           li.calcbutton 
-            p.calctext .
+            p.calcbuttontext .
           li.calcbutton.orangebutton#lastrowbox
-            p.calctext =
+            p.calcbuttontext =
     script(src='/vendor/jquery/dist/jquery.min.js')
     script(src=isProd ? '/index.min.js' : '/index.js')
