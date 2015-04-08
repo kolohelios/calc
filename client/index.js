@@ -31,11 +31,11 @@ $('li').click(function() {
 function buttonHit(button) {
   if($(button).hasClass('orangebutton')) {
     $(button).toggleClass('orangebuttonhit');
-    setTimeout(function() { $(button).toggleClass('orangebuttonhit'); }, 100);
+    setTimeout(function() { $(button).toggleClass('orangebuttonhit'); }, 75);
   }
   else {
     $(button).addClass('graybuttonhit');
-    setTimeout(function() { $(button).toggleClass('graybuttonhit'); }, 100);
+    setTimeout(function() { $(button).toggleClass('graybuttonhit'); }, 75);
   }
 }
 
@@ -64,6 +64,9 @@ function inputHandler(char) {
       break;
     case '⁺⁄‒':
       negateValue();
+      break;
+    case '%':
+      percentage();
   }
 }
 
@@ -99,19 +102,27 @@ function fixKeyboardMapping(keyCharCode) {
   switch(keyCharCode) {
     case "*":
       return 'X';
-      break;
     case "/":
       return '&#X00F7;'
-      break;
     default:
       return keyCharCode;
   }
 }
 
 function negateValue() {
-  if(displayBuffer.search(/[.]/) <= 0) {
+  if(displayBuffer.search(/[-]/) < 0) {
     displayBuffer = '-'.concat(displayBuffer);
   }
+  else {
+    displayBuffer = displayBuffer.substr(1, displayBuffer.length);
+  }
+  $('#displaytext').text(displayBuffer);
+}
+
+function percentage() {
+  var pct = parseFloat(displayBuffer);
+  pct /= 100;
+  displayBuffer = String(pct);
   $('#displaytext').text(displayBuffer);
 }
 
@@ -129,7 +140,13 @@ function performOperation() {
       result = firstNumber * secondNumber;
       break;
     case '&#X00F7;':
-      result = firstNumber / secondNumber;
+      if(secondNumber !== 0) {
+        result = firstNumber / secondNumber;
+      }
+      else {
+        result = "Not a number";
+        clearDisplay();
+      }
   }
   $('#displaytext').text(result);
   firstNumber = result;
