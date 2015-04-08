@@ -10,10 +10,16 @@ $(document).ready(function() {
 });
 
 $(document).on('keypress', function(keyCharCode) {
-	keyCharCode = String.fromCharCode(keyCharCode.which).toUpperCase();
-  var liHit = $('p:contains("' + keyCharCode + '")').closest('li');
-  buttonHit(liHit);
-  inputHandler(keyCharCode);
+	if(keyCharCode.which === 13) {
+    performOperation();
+  }
+  else {
+    keyCharCode = String.fromCharCode(keyCharCode.which).toUpperCase();
+    keyCharCode = fixKeyboardMapping(keyCharCode);
+    var liHit = $('p:contains("' + keyCharCode + '")').closest('li');
+    buttonHit(liHit);
+    inputHandler(keyCharCode);
+  }
 });
 
 $('li').click(function() {
@@ -23,19 +29,19 @@ $('li').click(function() {
 });
 
 function buttonHit(button) {
-  var originalColor = $(button).css('background-color');
-  var newColor = ($(button).hasClass('orangebutton')) ? 'rgba(218, 146, 50, 0.75)' : 'rgba(227, 227, 227, 0.75)';
-  $(button).css('background-color', newColor).delay(100).queue(function() {
-    $(button).css('background-color', originalColor);
-  });
+  if($(button).hasClass('orangebutton')) {
+    $(button).toggleClass('orangebuttonhit');
+    setTimeout(function() { $(button).toggleClass('orangebuttonhit'); }, 100);
+  }
+  else {
+    $(button).addClass('graybuttonhit');
+    setTimeout(function() { $(button).toggleClass('graybuttonhit'); }, 100);
+  }
 }
 
 function inputHandler(char) {
   if(char.match(/\d/) !== null || char === '.') {
     putNumberInBufferAndDisplay(char);
-  }
-  else if(char === 13) {
-    performOperation();
   }
   switch (char) {
     case 'C':
@@ -50,8 +56,14 @@ function inputHandler(char) {
     case '=':
       performOperation();
       break;
-    case '*':
-
+    case 'X':
+      setOperation(char);
+      break;
+    case '&#X00F7;':
+      setOperation(char);
+      break;
+    case '⁺⁄‒':
+      negateValue();
   }
 }
 
@@ -76,11 +88,51 @@ function clearDisplay() {
 }
 
 function setOperation(oper) {
-  firstNumber = parseFloat(displayBuffer);
-  operator = oper;
-  clearDisplay();
+  if(displayBuffer.length > 0) {
+    firstNumber = parseFloat(displayBuffer);
+    operator = oper;
+    clearDisplay();
+  }
+}
+
+function fixKeyboardMapping(keyCharCode) {
+  switch(keyCharCode) {
+    case "*":
+      return 'X';
+      break;
+    case "/":
+      return '&#X00F7;'
+      break;
+    default:
+      return keyCharCode;
+  }
+}
+
+function negateValue() {
+  if(displayBuffer.search(/[.]/) <= 0) {
+    displayBuffer = '-'.concat(displayBuffer);
+  }
+  $('#displaytext').text(displayBuffer);
 }
 
 function performOperation() {
-
+  secondNumber = parseFloat(displayBuffer);
+  var result;
+  switch (operator) {
+    case '+':
+      result = firstNumber + secondNumber;
+      break;
+    case '-':
+      result = firstNumber - secondNumber;
+      break;
+    case 'X':
+      result = firstNumber * secondNumber;
+      break;
+    case '&#X00F7;':
+      result = firstNumber / secondNumber;
+  }
+  $('#displaytext').text(result);
+  firstNumber = result;
+  displayBuffer = String(result);
+  secondNumber = 0;
 }
