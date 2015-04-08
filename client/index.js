@@ -2,8 +2,9 @@
 
 var displayBuffer = '0';
 var operator = '';
-var firstNumber = 0;
-var secondNumber = 0;
+var firstNumber = 0, secondNumber = 0;
+var subsequentOperation = false;
+var maxDisplayChars = 10;
 
 $(document).ready(function() {
 
@@ -16,8 +17,8 @@ $(document).on('keypress', function(keyCharCode) {
   else {
     keyCharCode = String.fromCharCode(keyCharCode.which).toUpperCase();
     keyCharCode = fixKeyboardMapping(keyCharCode);
-    var liHit = $('p:contains("' + keyCharCode + '")').closest('li');
-    buttonHit(liHit);
+    var listItemHit = $('p:contains("' + keyCharCode + '")').closest('li');
+    buttonHit(listItemHit);
     inputHandler(keyCharCode);
   }
 });
@@ -50,7 +51,7 @@ function inputHandler(char) {
     case '+':
       setOperation(char);
       break;
-    case '-':
+    case '&#X02014;': // minus
       setOperation(char);
       break;
     case '=':
@@ -59,7 +60,7 @@ function inputHandler(char) {
     case 'X':
       setOperation(char);
       break;
-    case '&#X00F7;':
+    case '&#X00F7;': //divide
       setOperation(char);
       break;
     case '⁺⁄‒':
@@ -79,6 +80,9 @@ function putNumberInBufferAndDisplay(number) {
       displayBuffer = displayBuffer.concat(number);
     }
   }
+  else if(displayBuffer.length >= maxDisplayChar) {
+    // do nothing... the display is full
+  }
   else {
     displayBuffer = displayBuffer.concat(number);
   }
@@ -88,11 +92,17 @@ function putNumberInBufferAndDisplay(number) {
 function clearDisplay() {
   displayBuffer = '0';
   $('#displaytext').text(displayBuffer);
+  subsequentOperation = false;
 }
 
 function setOperation(oper) {
   if(displayBuffer.length > 0) {
-    firstNumber = parseFloat(displayBuffer);
+    if(subsequentOperation) {
+      secondNumber = parseFloat(displayBuffer);
+    }
+    else {
+      firstNumber = parseFloat(displayBuffer);
+    }
     operator = oper;
     clearDisplay();
   }
@@ -100,10 +110,12 @@ function setOperation(oper) {
 
 function fixKeyboardMapping(keyCharCode) {
   switch(keyCharCode) {
-    case "*":
+    case '*':
       return 'X';
-    case "/":
-      return '&#X00F7;'
+    case '/':
+      return '&#X00F7;'; //divide
+    case '-':
+      return '&#X02014;'; // minus
     default:
       return keyCharCode;
   }
@@ -127,29 +139,31 @@ function percentage() {
 }
 
 function performOperation() {
-  secondNumber = parseFloat(displayBuffer);
+  if(!subsequentOperation) {
+    secondNumber = parseFloat(displayBuffer);
+  }
   var result;
   switch (operator) {
     case '+':
       result = firstNumber + secondNumber;
       break;
-    case '-':
+    case '&#X02014;': // minus
       result = firstNumber - secondNumber;
       break;
     case 'X':
       result = firstNumber * secondNumber;
       break;
-    case '&#X00F7;':
+    case '&#X00F7;': //divide
       if(secondNumber !== 0) {
         result = firstNumber / secondNumber;
       }
       else {
-        result = "Not a number";
+        result = 'Divide by 0';
         clearDisplay();
       }
   }
   $('#displaytext').text(result);
   firstNumber = result;
-  displayBuffer = String(result);
-  secondNumber = 0;
+  displayBuffer = '0';
+  subsequentOperation = true;
 }
