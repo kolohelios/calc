@@ -12,7 +12,7 @@ $(document).ready(init);
 function init() {
 	$(document).on('keypress', function(keyCharCode) {
 		if(keyCharCode.which === 13) {
-			buttonHit($("#lastrowbox"));
+			buttonHit($('#lastrowbox'));
 	    performOperation();
 	  }
 	  else {
@@ -51,6 +51,9 @@ function inputHandler(char) {
 		case 'C':
       clearDisplay(true);
       break;
+		case 'AC':
+			clearDisplay(true);
+			break;
     case '+':
       setOperation(char);
       break;
@@ -75,7 +78,7 @@ function inputHandler(char) {
     default:
       if(char.match(/\d/) !== null) {
         putNumberInBufferAndDisplay(char);
-    }
+    	}
   }
 }
 
@@ -105,6 +108,9 @@ function clearDisplay(clearButton) {
   $('#displaytext').text(displayBuffer);
 	if (clearButton) {
 		$('#calcclear').text('AC');
+		firstNumber = 0;
+		secondNumber = 0;
+		operator = 0;
 	}
   subsequentOperation = false;
 }
@@ -174,6 +180,7 @@ function performOperation() {
     secondNumber = parseFloat(displayBuffer);
   }
   var result;
+	debugger;
   switch (operator) {
     case '+':
       result = firstNumber + secondNumber;
@@ -196,6 +203,7 @@ function performOperation() {
   }
   $('#displaytext').text(result);
   firstNumber = result;
+	//secondNumber = 0;
   displayBuffer = '0';
   subsequentOperation = true;
   performOperationStaged = false;
