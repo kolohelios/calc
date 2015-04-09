@@ -1,6 +1,6 @@
 'use strict';
 
-var displayBuffer = '0';
+var displayText = '0';
 var operator = '';
 var firstNumber = 0, secondNumber = 0;
 var subsequentOperation = false;
@@ -48,7 +48,6 @@ function inputHandler(char) {
 		clearDisplay(true);
 		mustClearAfterDivideByZero = false;
 	}
-	console.log(char);
   if((char === 'C') || (char === 'AC')) {
 		clearDisplay(true);
 	}
@@ -85,29 +84,29 @@ function inputHandler(char) {
 }
 
 function putNumberInBufferAndDisplay(number) {
-  if(displayBuffer === '0') {
-    displayBuffer = number;
+  if(displayText === '0') {
+    displayText = number;
 		$('#calcclear').text('C');
   }
-  else if(displayBuffer.length >= maxDisplayChars) {
+  else if(displayText.length >= maxDisplayChars) {
     // do nothing... the display is full
   }
   else {
-    displayBuffer = displayBuffer.concat(number);
+    displayText = displayText.concat(number);
   }
-  $('#displaytext').text(displayBuffer);
+  $('#displaytext').text(displayText);
 }
 
 function handleDecimal () {
-	if(displayBuffer.indexOf('.') === -1) {
-		displayBuffer = displayBuffer + '.';
+	if(displayText.indexOf('.') === -1) {
+		displayText = displayText + '.';
 	}
-	$('#displaytext').text(displayBuffer);
+	$('#displaytext').text(displayText);
 }
 
 function clearDisplay(clearButton) {
-  displayBuffer = '0';
-  $('#displaytext').text(displayBuffer);
+  displayText = '0';
+  $('#displaytext').text(displayText);
 	if (clearButton) {
 		$('#calcclear').text('AC');
 		firstNumber = 0;
@@ -120,12 +119,12 @@ function clearDisplay(clearButton) {
 
 function setOperation(oper) {
   if(performOperationStaged === false) {
-    if(displayBuffer.length > 0) {
+    if(displayText.length > 0) {
       if(subsequentOperation) {
-        secondNumber = parseFloat(displayBuffer);
+        secondNumber = parseFloat(displayText);
       }
       else {
-        firstNumber = parseFloat(displayBuffer);
+        firstNumber = parseFloat(displayText);
       }
       clearDisplay();
     }
@@ -148,14 +147,14 @@ function fixKeyboardMapping(keyCharCode) {
 }
 
 function negateValue() {
-  if(displayBuffer !== '0') {
-		if(displayBuffer.indexOf('-') === -1) {
-	    displayBuffer = '-'.concat(displayBuffer);
+  if(displayText !== '0') {
+		if(displayText.indexOf('-') === -1) {
+	    displayText = '-'.concat(displayText);
 	  }
 	  else {
-	    displayBuffer = displayBuffer.substr(1, displayBuffer.length);
+	    displayText = displayText.substr(1, displayText.length);
 	  }
-	  $('#displaytext').text(displayBuffer);
+	  $('#displaytext').text(displayText);
 	}
 	else {
 		if(subsequentOperation) {
@@ -167,10 +166,10 @@ function negateValue() {
 
 function percentage() {
   if(!subsequentOperation) {
-		var pct = parseFloat(displayBuffer);
+		var pct = parseFloat(displayText);
 	  pct /= 100;
-	  displayBuffer = String(pct);
-	  $('#displaytext').text(displayBuffer);
+	  displayText = String(pct);
+	  $('#displaytext').text(displayText);
 	}
 	else {
 		firstNumber /= 100;
@@ -179,8 +178,11 @@ function percentage() {
 }
 
 function performOperation() {
-  if(!subsequentOperation) {
-    secondNumber = parseFloat(displayBuffer);
+  if(displayText.slice(-1) === '.') {
+		displayText = displayText.subst(0, displayText.length - 1);
+	}
+	if(!subsequentOperation) {
+    secondNumber = parseFloat(displayText);
   }
   var result;
   switch (operator) {
@@ -198,13 +200,13 @@ function performOperation() {
         result = firstNumber / secondNumber;
       }
       else {
-        result = 'Divide by 0';
+        result = 'Not a number';
 				mustClearAfterDivideByZero = true;
       }
   }
   $('#displaytext').text(result);
   firstNumber = result;
-  displayBuffer = '0';
+  displayText = '0';
   subsequentOperation = true;
   performOperationStaged = false;
 }
