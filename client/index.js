@@ -5,6 +5,7 @@ var operator = '';
 var firstNumber = 0, secondNumber = 0;
 var subsequentOperation = false;
 var maxDisplayChars = 10;
+var mustClearAfterDivideByZero = false;
 var performOperationStaged = false;
 
 $(document).ready(init);
@@ -13,7 +14,7 @@ function init() {
 	$(document).on('keypress', function(keyCharCode) {
 		if(keyCharCode.which === 13) {
 			buttonHit($('#lastrowbox'));
-	    performOperation();
+	    inputHandler('=');
 	  }
 	  else {
 	    keyCharCode = String.fromCharCode(keyCharCode.which).toUpperCase();
@@ -43,16 +44,17 @@ function buttonHit(button) {
 }
 
 function inputHandler(char) {
+	if(mustClearAfterDivideByZero) {
+		clearDisplay(true);
+		mustClearAfterDivideByZero = false;
+	}
 	console.log(char);
-  switch (char) {
+  if((char === 'C') || (char === 'AC')) {
+		clearDisplay(true);
+	}
+	switch (char) {
     case '.':
 			handleDecimal();
-			break;
-		case 'C':
-      clearDisplay(true);
-      break;
-		case 'AC':
-			clearDisplay(true);
 			break;
     case '+':
       setOperation(char);
@@ -79,7 +81,7 @@ function inputHandler(char) {
       if(char.match(/\d/) !== null) {
         putNumberInBufferAndDisplay(char);
     	}
-  }
+		}
 }
 
 function putNumberInBufferAndDisplay(number) {
@@ -111,6 +113,7 @@ function clearDisplay(clearButton) {
 		firstNumber = 0;
 		secondNumber = 0;
 		operator = 0;
+		mustClearAfterDivideByZero = false;
 	}
   subsequentOperation = false;
 }
@@ -180,7 +183,6 @@ function performOperation() {
     secondNumber = parseFloat(displayBuffer);
   }
   var result;
-	debugger;
   switch (operator) {
     case '+':
       result = firstNumber + secondNumber;
@@ -197,13 +199,11 @@ function performOperation() {
       }
       else {
         result = 'Divide by 0';
-        clearDisplay();
-        result = 0;
+				mustClearAfterDivideByZero = true;
       }
   }
   $('#displaytext').text(result);
   firstNumber = result;
-	//secondNumber = 0;
   displayBuffer = '0';
   subsequentOperation = true;
   performOperationStaged = false;
