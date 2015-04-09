@@ -7,28 +7,28 @@ var subsequentOperation = false;
 var maxDisplayChars = 10;
 var performOperationStaged = false;
 
-$(document).ready(function() {
+$(document).ready(init);
 
-});
+function init() {
+	$(document).on('keypress', function(keyCharCode) {
+		if(keyCharCode.which === 13) {
+	    performOperation();
+	  }
+	  else {
+	    keyCharCode = String.fromCharCode(keyCharCode.which).toUpperCase();
+	    keyCharCode = fixKeyboardMapping(keyCharCode);
+	    var listItemHit = $('p:contains("' + keyCharCode + '")').closest('li');
+	    buttonHit(listItemHit);
+	    inputHandler(keyCharCode);
+	  }
+	});
 
-$(document).on('keypress', function(keyCharCode) {
-	if(keyCharCode.which === 13) {
-    performOperation();
-  }
-  else {
-    keyCharCode = String.fromCharCode(keyCharCode.which).toUpperCase();
-    keyCharCode = fixKeyboardMapping(keyCharCode);
-    var listItemHit = $('p:contains("' + keyCharCode + '")').closest('li');
-    buttonHit(listItemHit);
-    inputHandler(keyCharCode);
-  }
-});
-
-$('li').click(function() {
-  var valueOfClickedButton = $(this).find('p').text();
-  buttonHit(this);
-  inputHandler(valueOfClickedButton);
-});
+	$('li').click(function() {
+	  var valueOfClickedButton = $(this).find('p').text();
+	  buttonHit(this);
+	  inputHandler(valueOfClickedButton);
+	});
+}
 
 function buttonHit(button) {
   if($(button).hasClass('orangebutton')) {
@@ -43,7 +43,10 @@ function buttonHit(button) {
 
 function inputHandler(char) {
   switch (char) {
-    case 'C':
+    case '.':
+			handleDecimal();
+			break;
+		case 'C':
       clearDisplay();
       break;
     case '+':
@@ -68,7 +71,7 @@ function inputHandler(char) {
       percentage();
       break;
     default:
-      if(char.match(/\d/) !== null || char.match(/[.]/)) {
+      if(char.match(/\d/) !== null) {
         putNumberInBufferAndDisplay(char);
     }
   }
@@ -78,11 +81,6 @@ function putNumberInBufferAndDisplay(number) {
   if(displayBuffer === '0') {
     displayBuffer = number;
   }
-  else if(number === '.') {
-    if(displayBuffer.search(/[.]/) <= 0) {
-      displayBuffer = displayBuffer.concat(number);
-    }
-  }
   else if(displayBuffer.length >= maxDisplayChars) {
     // do nothing... the display is full
   }
@@ -90,6 +88,13 @@ function putNumberInBufferAndDisplay(number) {
     displayBuffer = displayBuffer.concat(number);
   }
   $('#displaytext').text(displayBuffer);
+}
+
+function handleDecimal () {
+	if(displayBuffer.indexOf('.') === -1) {
+		displayBuffer = displayBuffer + '.';
+	}
+	$('#displaytext').text(displayBuffer);
 }
 
 function clearDisplay() {
@@ -128,13 +133,15 @@ function fixKeyboardMapping(keyCharCode) {
 }
 
 function negateValue() {
-  if(displayBuffer.search(/[-]/) < 0) {
-    displayBuffer = '-'.concat(displayBuffer);
-  }
-  else {
-    displayBuffer = displayBuffer.substr(1, displayBuffer.length);
-  }
-  $('#displaytext').text(displayBuffer);
+  if(displayBuffer !== '0') {
+		if(displayBuffer.indexOf('-') === -1) {
+	    displayBuffer = '-'.concat(displayBuffer);
+	  }
+	  else {
+	    displayBuffer = displayBuffer.substr(1, displayBuffer.length);
+	  }
+	  $('#displaytext').text(displayBuffer);
+	}
 }
 
 function percentage() {

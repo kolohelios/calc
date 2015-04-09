@@ -1,6 +1,5 @@
 body {
   background-color: white;
-  width: 283px;
   font-family: 'Helvetica Neue', helvetica;
   font-weight: 300;
   cursor: pointer;
@@ -8,15 +7,15 @@ body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
 }
-#calccontainer {
+#calculatorwrapper {
+  text-align: center;
+}
+#calculator {
+  width: 283px;
   background-color: black;
-  margin: -40px 3px 0 0;
-  padding: 0;
 }
 #display {
   background-color: black;
-  margin-left: -3px;
-  margin-right: 3px;
   min-height: 100px;
 }
 #displaytext {
@@ -28,7 +27,7 @@ body {
   padding: 20px 10px 10px 0;
 }
 #buttons {
-  margin-top: -42px;
+  margin-top: -46px;
   padding: 0;
 }
 .calcrow {
@@ -43,7 +42,7 @@ body {
   min-height: 70px;
   font-size: 20px;
   padding: 0;
-  margin: -3px;
+  margin: -1px -3px;
   display: inline-block;
   border: 1px gray solid;
 }
@@ -59,10 +58,11 @@ body {
 }
 #calcdividebutton {
   margin-top: 12px;
+  margin-bottom: -16px;
   font-size: 28px;
 }
 #calcbutton0 {
-  width: 141px;
+  width: 140px;
 }
 .calcbuttontext {
   margin-top: 20px;
@@ -77,13 +77,14 @@ body {
   color: white;
 }
 #lastrowbox {
-  margin: -4px;
+  margin: -3px;
 }
 .orangebuttonhit {
-  background-color: rgba(218, 146, 50, 0.75);
+  background-color: rgba(218, 146, 50, 0.9);
   color: gray;
+  padding: -1px;
+  margin: -3px;
 }
 .graybuttonhit {
-  background-color: rgba(227, 227, 227, 0.75);
-  overflow: none;
+  background-color: rgba(227, 227, 227, 0.9);
 }
