@@ -12,6 +12,7 @@ $(document).ready(init);
 function init() {
 	$(document).on('keypress', function(keyCharCode) {
 		if(keyCharCode.which === 13) {
+			buttonHit($("#lastrowbox"));
 	    performOperation();
 	  }
 	  else {
@@ -33,26 +34,27 @@ function init() {
 function buttonHit(button) {
   if($(button).hasClass('orangebutton')) {
     $(button).toggleClass('orangebuttonhit');
-    setTimeout(function() { $(button).toggleClass('orangebuttonhit'); }, 75);
+    setTimeout(function() { $(button).toggleClass('orangebuttonhit'); }, 100);
   }
   else {
     $(button).addClass('graybuttonhit');
-    setTimeout(function() { $(button).toggleClass('graybuttonhit'); }, 75);
+    setTimeout(function() { $(button).toggleClass('graybuttonhit'); }, 100);
   }
 }
 
 function inputHandler(char) {
+	console.log(char);
   switch (char) {
     case '.':
 			handleDecimal();
 			break;
 		case 'C':
-      clearDisplay();
+      clearDisplay(true);
       break;
     case '+':
       setOperation(char);
       break;
-    case '&#X02014;': // minus
+    case '—':
       setOperation(char);
       break;
     case '=':
@@ -61,7 +63,7 @@ function inputHandler(char) {
     case 'X':
       setOperation(char);
       break;
-    case '&#X00F7;': //divide
+    case '÷':
       setOperation(char);
       break;
     case '⁺⁄‒':
@@ -80,6 +82,7 @@ function inputHandler(char) {
 function putNumberInBufferAndDisplay(number) {
   if(displayBuffer === '0') {
     displayBuffer = number;
+		$('#calcclear').text('C');
   }
   else if(displayBuffer.length >= maxDisplayChars) {
     // do nothing... the display is full
@@ -97,9 +100,12 @@ function handleDecimal () {
 	$('#displaytext').text(displayBuffer);
 }
 
-function clearDisplay() {
+function clearDisplay(clearButton) {
   displayBuffer = '0';
   $('#displaytext').text(displayBuffer);
+	if (clearButton) {
+		$('#calcclear').text('AC');
+	}
   subsequentOperation = false;
 }
 
@@ -124,9 +130,9 @@ function fixKeyboardMapping(keyCharCode) {
     case '*':
       return 'X';
     case '/':
-      return '&#X00F7;'; //divide
+      return '÷'; //divide
     case '-':
-      return '&#X02014;'; // minus
+      return '—'; // minus
     default:
       return keyCharCode;
   }
@@ -142,13 +148,25 @@ function negateValue() {
 	  }
 	  $('#displaytext').text(displayBuffer);
 	}
+	else {
+		if(subsequentOperation) {
+			firstNumber *= -1;
+			$('#displaytext').text(firstNumber);
+		}
+	}
 }
 
 function percentage() {
-  var pct = parseFloat(displayBuffer);
-  pct /= 100;
-  displayBuffer = String(pct);
-  $('#displaytext').text(displayBuffer);
+  if(!subsequentOperation) {
+		var pct = parseFloat(displayBuffer);
+	  pct /= 100;
+	  displayBuffer = String(pct);
+	  $('#displaytext').text(displayBuffer);
+	}
+	else {
+		firstNumber /= 100;
+		$('#displaytext').text(firstNumber);
+	}
 }
 
 function performOperation() {
@@ -160,13 +178,13 @@ function performOperation() {
     case '+':
       result = firstNumber + secondNumber;
       break;
-    case '&#X02014;': // minus
+    case '—':
       result = firstNumber - secondNumber;
       break;
     case 'X':
       result = firstNumber * secondNumber;
       break;
-    case '&#X00F7;': //divide
+    case '÷':
       if(secondNumber !== 0) {
         result = firstNumber / secondNumber;
       }
