@@ -6,19 +6,23 @@ body {
   -webkit-font-smoothing: antialiased;
   -webkit-touch-callout: none;
   -webkit-user-select: none;
-}
-#calculatorwrapper {
   margin: 0 auto;
-  text-align: center;
 }
 #calculator {
+  margin: 0 auto;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  margin-top: -270px;
+  margin-left: -200px;
   width: 283px;
-  background-color: black;
-  margin-top: -35px;
+  height: 494px;
 }
 #display {
   background-color: black;
   min-height: 100px;
+  margin-right: 3px;
+  margin-left: -3px;
 }
 #displaytext {
   position: relative;
@@ -64,7 +68,7 @@ body {
   font-size: 28px;
 }
 #calcbutton0 {
-  width: 140px;
+  width: 141px;
 }
 .calcbuttontext {
   margin-top: 20px;
@@ -72,7 +76,10 @@ body {
 }
 #calctext0 {
   text-align: left;
-  margin-left: 30px;
+  margin-left: 29px;
+}
+#calcperiodbutton{
+  width: 69px;
 }
 .orangebutton {
   background-color: rgba(218, 146, 50, 1.00);
