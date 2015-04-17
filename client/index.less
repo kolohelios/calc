@@ -7,7 +7,7 @@ body{
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   margin: 0 auto;
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   position: relative;
 
@@ -15,34 +15,24 @@ body{
 #calculator{
   position: absolute;
   left: 0;
-  top: -50px;
+  top: 0;
   margin: 0 auto;
-  //top: 50%;
-  //left: 50%;
-  //margin-top: -270px;
-  //margin-left: -200px;
-  //width: 283px;
   width: 100%;
   height: 100%;
-  //height: 494px;
 }
 #display{
   background-color: black;
   height: 20%;
-  min-height: 150px;
-  //margin-right: 3px;
-  //margin-left: -3px;
+  margin-top: -45px;
+  min-height: 125px;
 }
 #displaytext{
-  position: relative;
-  top: 15%;
   text-align: right;
   color: white;
   font-size: 45px;
-  padding: 20px 10px 10px 0;
+  padding: 70px 10px 10px 0;
 }
 #buttons{
-  margin-top: -46px;
   padding: 0;
 }
 .calcrow{
@@ -53,7 +43,6 @@ body{
 .calcbutton{
   background-color: rgba(227, 227, 227, 1.00);
   text-align: center;
-  //width: 70px;
   width: 25%;
   height: 25%;
   min-height: 70px;
@@ -63,6 +52,7 @@ body{
   margin: -1px -3px;
   display: inline-block;
   border: 1px gray solid;
+  z-index: 100;
 }
 #calcbuttonplusminus{
   padding: -20px 0;
