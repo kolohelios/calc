@@ -2,6 +2,7 @@ doctype html
 html
   head
     meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
     title Fruit Calculator
     link(rel='stylesheet', href='/vendor/font-awesome/css/font-awesome.min.css')
     link(rel='stylesheet', href=isProd ? '/index.min.css' : '/index.css')
@@ -55,7 +56,7 @@ html
             p.calcbuttontext#calctext0 0
           li.calcbutton#calcperiodbutton
             p.calcbuttontext .
-          li.calcbutton.orangebutton#lastrowbox
+          li.calcbutton.orangebutton
             p.calcbuttontext =
     script(src='/vendor/jquery/dist/jquery.min.js')
     script(src=isProd ? '/index.min.js' : '/index.js')

@@ -1,4 +1,4 @@
-body {
+body{
   background-color: white;
   font-family: 'Helvetica Neue', helvetica;
   font-weight: 300;
@@ -7,93 +7,102 @@ body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   margin: 0 auto;
-}
-#calculator {
-  margin: 0 auto;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  margin-top: -270px;
-  margin-left: -200px;
-  width: 283px;
-  height: 494px;
-}
-#display {
-  background-color: black;
-  min-height: 100px;
-  margin-right: 3px;
-  margin-left: -3px;
-}
-#displaytext {
+  height: 100vh;
+  width: 100vw;
   position: relative;
-  top: 25px;
+
+}
+#calculator{
+  position: absolute;
+  left: 0;
+  top: -50px;
+  margin: 0 auto;
+  //top: 50%;
+  //left: 50%;
+  //margin-top: -270px;
+  //margin-left: -200px;
+  //width: 283px;
+  width: 100%;
+  height: 100%;
+  //height: 494px;
+}
+#display{
+  background-color: black;
+  height: 20%;
+  min-height: 150px;
+  //margin-right: 3px;
+  //margin-left: -3px;
+}
+#displaytext{
+  position: relative;
+  top: 15%;
   text-align: right;
   color: white;
   font-size: 45px;
   padding: 20px 10px 10px 0;
 }
-#buttons {
+#buttons{
   margin-top: -46px;
   padding: 0;
 }
-.calcrow {
+.calcrow{
   padding: 0;
   margin: 0;
   width: 100%;
 }
-.calcbutton {
+.calcbutton{
   background-color: rgba(227, 227, 227, 1.00);
   text-align: center;
-  width: 70px;
+  //width: 70px;
+  width: 25%;
+  height: 25%;
   min-height: 70px;
+  min-width: 70px;
   font-size: 22px;
   padding: 0;
   margin: -1px -3px;
   display: inline-block;
   border: 1px gray solid;
 }
-#calcbuttonplusminus {
+#calcbuttonplusminus{
   padding: -20px 0;
 }
-#calcplusminusbuttontext {
+#calcplusminusbuttontext{
   margin-top: 16px;
   vertical-align: middle;
 }
-#calcbuttonslash {
+#calcbuttonslash{
   font-size: 26px;
 }
-#calcdividebutton {
+#calcdividebutton{
   margin-top: 14px;
   margin-bottom: -16px;
   font-size: 28px;
 }
-#calcbutton0 {
-  width: 141px;
+#calcbutton0{
+  width: 50.05%;
 }
-.calcbuttontext {
+.calcbuttontext{
   margin-top: 20px;
   vertical-align: middle;
 }
-#calctext0 {
+#calctext0{
   text-align: left;
-  margin-left: 29px;
+  margin-left: 24%;
 }
 #calcperiodbutton{
-  width: 69px;
+  width: 25%;
 }
-.orangebutton {
+.orangebutton{
   background-color: rgba(218, 146, 50, 1.00);
   color: white;
 }
-#lastrowbox {
-  margin: -3px;
-}
-.orangebuttonhit {
+.orangebuttonhit{
   background-color: rgba(218, 146, 50, 0.5);
   color: gray;
   padding: -1px;
   margin: -3px;
 }
-.graybuttonhit {
+.graybuttonhit{
   background-color: rgba(227, 227, 227, 0.5);
 }
